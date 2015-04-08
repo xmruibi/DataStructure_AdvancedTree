@@ -1,27 +1,23 @@
 package tries.DS;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import tries.Interface.Tries;
 
 /**
- * Suffix Tree 用途： 
- * 1.查找字符串o是否在字符串S中。 方案：用S构造后缀树，按在trie中搜索字串的方法搜索o即可。 
- * 原理：若o在S中，则o必然是S的某个后缀的前缀。 
- * 例如S:
- * leconte，查找o: con是否在S中,则o(con)必然是S(leconte)的后缀之一conte的前缀.有了这个前提，
- * 采用trie搜索的方法就不难理解了。
+ * Suffix Tree 用途： 1.查找字符串o是否在字符串S中。 方案：用S构造后缀树，按在trie中搜索字串的方法搜索o即可。
+ * 原理：若o在S中，则o必然是S的某个后缀的前缀。 例如S: leconte，查找o:
+ * con是否在S中,则o(con)必然是S(leconte)的后缀之一conte的前缀.有了这个前提， 采用trie搜索的方法就不难理解了。
  * 
  * 2. 指定字符串T在字符串S中的重复次数。 方案：用S+’$'构造后缀树，搜索T节点下的叶节点数目即为重复次数
- * 原理：如果T在S中重复了两次，则S应有两个后缀以T为前缀，重复次数就自然统计出来了。 
+ * 原理：如果T在S中重复了两次，则S应有两个后缀以T为前缀，重复次数就自然统计出来了。
  * 
- * 3. 字符串S中的最长重复子串
- * 方案：原理同2，具体做法就是找到最深的非叶节点。 这个深是指从root所经历过的字符个数，最深非叶节点所经历的字符串起来就是最长重复子串。
- * 为什么要非叶节点呢?因为既然是要重复，当然叶节点个数要>=2。 
+ * 3. 字符串S中的最长重复子串 方案：原理同2，具体做法就是找到最深的非叶节点。
+ * 这个深是指从root所经历过的字符个数，最深非叶节点所经历的字符串起来就是最长重复子串。 为什么要非叶节点呢?因为既然是要重复，当然叶节点个数要>=2。
  * 
- * 4. 两个字符串S1，S2的最长公共部分
- * 方案：将S1#S2$作为字符串压入后缀树，找到最深的非叶节点，且该节点的叶节点既有#也有$(无#)。
+ * 4. 两个字符串S1，S2的最长公共部分 方案：将S1#S2$作为字符串压入后缀树，找到最深的非叶节点，且该节点的叶节点既有#也有$(无#)。
  * 
  * @author xmrui_000
  *
@@ -74,13 +70,13 @@ public class SuffixTree implements Tries {
 						String nextWord = word.substring(ptr);
 						int res = search(child, nextWord);
 						// return res = -1 or res - current check word's length
-						return res == -1 ? -1 : res;
+						return res == -1 ? -1 : res - check.length();
 					} else { // check.length()>word.length()
 						return child.minStartIndex;
 					}
-				} else { // ptr!=len not complete match
+				} else
+					// ptr!=len not complete match
 					return -1;
-				}
 			}
 		}
 		return -1;
@@ -171,9 +167,7 @@ public class SuffixTree implements Tries {
 						insert(child, wordTail, idx + ptr); // recursion
 					}
 				} else { // 0<ptr<len
-							// separate check into two parts according to
-							// the
-							// ptr!
+					// separate check into two parts according to the ptr!
 					String head = check.substring(0, ptr);
 					String tail = check.substring(ptr);
 
@@ -205,7 +199,6 @@ public class SuffixTree implements Tries {
 						child.children.add(newSubchild);
 					}
 				}
-
 				done = true;
 				break;
 			}
@@ -224,10 +217,17 @@ public class SuffixTree implements Tries {
 		return false;
 	}
 
-	public String longestCommonAncester() {
+	public String lowestCommonAncester() {
 
 		return "";
 	}
+
+	@Override
+	public String longestPrefix(String pattern) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	// for test purpose only
 	public void printTree() {
@@ -254,8 +254,8 @@ public class SuffixTree implements Tries {
 
 	public static void main(String[] args) {
 		SuffixTree tree = new SuffixTree();
-		tree.insert("mississippi");
+		tree.insert("misississi");
 		tree.printTree();
-		tree.search("is");
 	}
+
 }

@@ -80,6 +80,7 @@ public class TernarySearchTree implements Tries {
 		return node;
 	}
 
+	@Override
 	public String longestPrefix(String pattern) {
 		int index = 0;
 		TernaryNode node =root;

@@ -61,6 +61,21 @@ public class PrefixTree implements Tries {
 		}
 	}
 
+	@Override
+	public String longestPrefix(String pattern) {
+		int len = 0;
+		PrefixNode node = root;
+		while (len < pattern.length()) {
+			char c = Character.toLowerCase(pattern.charAt(len));
+			int idx = c - 'a';
+			if(node.children[idx]==null)
+				break;
+			node = node.children[idx];
+			len++;
+		}
+		return pattern.substring(0, len);
+	}
+
 	public int countPrefix(String prefix) {
 		return countPrefix(root, prefix).prefix;
 	}
@@ -113,7 +128,7 @@ public class PrefixTree implements Tries {
 		PrefixTree prefixTree = new PrefixTree();
 		prefixTree.build("the them their");
 
-		//System.out.println(prefixTree.countWords("the"));
-		 System.out.println(prefixTree.countPrefix("th"));
+		// System.out.println(prefixTree.countWords("the"));
+		System.out.println(prefixTree.countPrefix("th"));
 	}
 }
