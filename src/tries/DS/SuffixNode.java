@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SuffixNode {
-	String key;
-	List<SuffixNode> children;
+	private String key;
+	List<SuffixNode> children; // because the children is ordered by lexicographic 
 	boolean terminal;
 	int minStartIndex;
 
@@ -21,6 +21,14 @@ public class SuffixNode {
 		children = new LinkedList<SuffixNode>();
 	}
 
+	
+	public String getKey() {
+		return key;
+	}
+	
+	public void changeKey(String word) {
+		this.key = word;
+	}
 	@Override
 	public String toString() {
 		return this.key + " [" + this.minStartIndex + "] "
